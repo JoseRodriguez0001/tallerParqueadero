@@ -1,6 +1,6 @@
 **Taller en clase – Arquitectura por capas**
 
-**Grupo:** 3 personas
+**Grupo:** 2 personas ( Jose Rodriguez , Laura Perez)
 
 **Puntos:** 40
 
@@ -55,7 +55,7 @@ Implemente en **Java** un prototipo funcional que evidencie la arquitectura prop
 El prototipo puede ser:
 
 - Aplicación de escritorio, o
-- Aplicación Web.
+- Aplicación Web. (elegimos esto)
 
 No es necesario implementar un sistema completo de producción.
 

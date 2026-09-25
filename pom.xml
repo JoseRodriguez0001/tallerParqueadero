@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project 
+    
+    xmlns="http://maven.apache.org/POM/4.0.0"
+         
+    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
              http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.example</groupId>
     <artifactId>layered-app</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-
     <name>Layered Architecture App</name>
-    <description>Plantilla de arquitectura en capas clásica en Java puro</description>
-
+    <description>Proyecto parqueadero</description>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
     <dependencies>
         <!-- JUnit 5 para pruebas unitarias -->
         <dependency>
@@ -28,7 +27,6 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
-
         <!-- Mockito para mocks en tests -->
         <dependency>
             <groupId>org.mockito</groupId>
@@ -36,7 +34,6 @@
             <version>5.11.0</version>
             <scope>test</scope>
         </dependency>
-
         <!-- AssertJ para assertions fluentes -->
         <dependency>
             <groupId>org.assertj</groupId>
@@ -44,8 +41,12 @@
             <version>3.25.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.9</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <!-- Plugin para ejecutar tests con JUnit 5 -->
@@ -54,7 +55,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
             </plugin>
-
             <!-- Plugin para empaquetar con main class -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -70,5 +70,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
