@@ -1,4 +1,4 @@
-package com.example.service.dto;
+package com.parqueadero.service.dto;
 
 /**
  * DTO de entrada para crear un producto.

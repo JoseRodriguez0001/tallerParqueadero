@@ -1,9 +1,9 @@
-package com.example.presentation;
+package com.parqueadero.presentation;
 
-import com.example.repository.ProductRepository;
-import com.example.repository.impl.InMemoryProductRepository;
-import com.example.service.ProductService;
-import com.example.service.impl.ProductServiceImpl;
+import com.parqueadero.repository.ProductRepository;
+import com.parqueadero.repository.impl.InMemoryProductRepository;
+import com.parqueadero.service.ProductService;
+import com.parqueadero.service.impl.ProductServiceImpl;
 
 /**
  * Punto de entrada de la aplicación.

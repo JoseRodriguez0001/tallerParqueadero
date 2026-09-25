@@ -1,12 +1,12 @@
-package com.example.presentation;
-
-import com.example.domain.exception.ProductNotFoundException;
-import com.example.service.ProductService;
-import com.example.service.dto.CreateProductRequest;
-import com.example.service.dto.ProductResponse;
+package com.parqueadero.presentation;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.parqueadero.domain.exception.ProductNotFoundException;
+import com.parqueadero.service.ProductService;
+import com.parqueadero.service.dto.CreateProductRequest;
+import com.parqueadero.service.dto.ProductResponse;
 
 /**
  * Controlador de la capa de presentación (consola / CLI).

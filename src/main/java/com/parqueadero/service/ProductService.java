@@ -1,10 +1,10 @@
-package com.example.service;
-
-import com.example.service.dto.CreateProductRequest;
-import com.example.service.dto.ProductResponse;
+package com.parqueadero.service;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.parqueadero.service.dto.CreateProductRequest;
+import com.parqueadero.service.dto.ProductResponse;
 
 /**
  * Contrato de la capa de servicio.

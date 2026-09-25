@@ -1,15 +1,15 @@
-package com.example.service.impl;
-
-import com.example.domain.Product;
-import com.example.domain.exception.ProductNotFoundException;
-import com.example.repository.ProductRepository;
-import com.example.service.ProductService;
-import com.example.service.dto.CreateProductRequest;
-import com.example.service.dto.ProductResponse;
-import com.example.service.mapper.ProductMapper;
+package com.parqueadero.service.impl;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.parqueadero.domain.Product;
+import com.parqueadero.domain.exception.ProductNotFoundException;
+import com.parqueadero.repository.ProductRepository;
+import com.parqueadero.service.ProductService;
+import com.parqueadero.service.dto.CreateProductRequest;
+import com.parqueadero.service.dto.ProductResponse;
+import com.parqueadero.service.mapper.ProductMapper;
 
 /**
  * Implementación de ProductService.

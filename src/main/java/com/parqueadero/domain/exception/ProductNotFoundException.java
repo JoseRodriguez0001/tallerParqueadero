@@ -1,4 +1,4 @@
-package com.example.domain.exception;
+package com.parqueadero.domain.exception;
 
 /**
  * Excepción de dominio: lanzada cuando un Product no es encontrado.

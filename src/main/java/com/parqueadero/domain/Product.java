@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.parqueadero.domain;
 
 import java.util.UUID;
 

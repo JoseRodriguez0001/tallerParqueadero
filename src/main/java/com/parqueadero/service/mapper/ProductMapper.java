@@ -1,7 +1,7 @@
-package com.example.service.mapper;
+package com.parqueadero.service.mapper;
 
-import com.example.domain.Product;
-import com.example.service.dto.ProductResponse;
+import com.parqueadero.domain.Product;
+import com.parqueadero.service.dto.ProductResponse;
 
 /**
  * Mapper entre la entidad de dominio y el DTO de respuesta.

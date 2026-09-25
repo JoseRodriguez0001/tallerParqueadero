@@ -1,10 +1,10 @@
-package com.example.repository;
-
-import com.example.domain.Product;
+package com.parqueadero.repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.parqueadero.domain.Product;
 
 /**
  * Contrato del repositorio de Product.

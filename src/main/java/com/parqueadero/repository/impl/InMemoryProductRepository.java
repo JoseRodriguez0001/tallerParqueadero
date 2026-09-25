@@ -1,10 +1,10 @@
-package com.example.repository.impl;
-
-import com.example.domain.Product;
-import com.example.repository.ProductRepository;
+package com.parqueadero.repository.impl;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.parqueadero.domain.Product;
+import com.parqueadero.repository.ProductRepository;
 
 /**
  * Implementación in-memory de ProductRepository.
