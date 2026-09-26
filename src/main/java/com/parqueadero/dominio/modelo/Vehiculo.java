@@ -20,7 +20,7 @@ public class Vehiculo {
         return new Vehiculo(id, placa, tipoVehiculo);
     }
 
-    // RN-05: mayúsculas, sin espacios ni guiones ("abc-123 " → "ABC123").
+    // Mayúsculas, sin espacios ni guiones ("abc-123 " → "ABC123").
     // Única definición de la regla: la usan este constructor y los servicios antes de buscar por placa.
     public static String normalizarPlaca(String placa) {
         if (placa == null) {
