@@ -8,18 +8,19 @@ Referencia obligatoria: `Diseno_Sistema_Parqueadero.docx` (secciones 6, 7 y 8).
 
 ## 1. Reparto
 
-| | **Integrante A — Estadía** | **Integrante B — Vehículo y catálogo** |
-|---|---|---|
-| **Entidades** | `Estadia`, `Pago`, `EstadoEstadia`, `CanalPago`, `Usuario`, `Rol` | `Vehiculo`, `TipoVehiculo`, `Tarifa` |
-| **Cobro** | `PoliticaCobro`, `CobroPorHoraIniciada` | — |
-| **Repositorios JDBC** | `EstadiaRepositoryJdbc` (incluye el pago), `UsuarioRepositoryJdbc` | `VehiculoRepositoryJdbc`, `TipoVehiculoRepositoryJdbc`, `TarifaRepositoryJdbc` |
-| **Servicios** | `EstadiaService` | `VehiculoService`, `TipoVehiculoService` |
-| **DTO / mapper** | `EstadiaDTO`, `EstadiaMapper` | `VehiculoDTO`, `TipoVehiculoDTO` y sus mappers |
+|                                  | **Integrante A — Estadía**                                              | **Integrante B — Vehículo y catálogo**                                                                                              |
+| -------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Entidades**              | `Estadia`, `Pago`, `EstadoEstadia`, `CanalPago`, `Usuario`, `Rol`   | `Vehiculo`, `TipoVehiculo`, `Tarifa`                                                                                                   |
+| **Cobro**                  | `PoliticaCobro`, `CobroPorHoraIniciada`                                     | —                                                                                                                                           |
+| **Repositorios JDBC**      | `EstadiaRepositoryJdbc` (incluye el pago), `UsuarioRepositoryJdbc`          | `VehiculoRepositoryJdbc`, `TipoVehiculoRepositoryJdbc`, `TarifaRepositoryJdbc`                                                         |
+| **Servicios**              | `EstadiaService`                                                              | `VehiculoService`, `TipoVehiculoService`                                                                                                 |
+| **DTO / mapper**           | `EstadiaDTO`, `EstadiaMapper`                                               | `VehiculoDTO`, `TipoVehiculoDTO` y sus mappers                                                                                           |
 | **Controladores y vistas** | `EstadiaController`: ingreso, salida, pago en caja, vista "En el parqueadero" | `VehiculoController`: registrar vehículo, vista "Registrados"; **base web** (servidor, plantilla común, manejo de errores, inicio) |
-| **Casos de uso** | CU-03 (con el extend a CU-04), CU-05, CU-06, CU-07 vista "En el parqueadero" | CU-04 independiente, CU-07 vista "Registrados" |
-| **Infraestructura** | Fase 0 completa, `Aplicacion` | — |
+| **Casos de uso**           | CU-03 (con el extend a CU-04), CU-05, CU-06, CU-07 vista "En el parqueadero"    | CU-04 independiente, CU-07 vista "Registrados"                                                                                               |
+| **Infraestructura**        | Fase 0 completa,`Aplicacion`                                                  | —                                                                                                                                           |
 
 Reglas del reparto:
+
 - `Estadia` y `Pago` van juntos: el pago lo crea la estadía y se guarda por `EstadiaRepository` (composición).
 - `TipoVehiculo` y `Tarifa` van juntos: se crean y se consultan juntos (RN-15, RN-01).
 - Cada integrante recorre **todas las capas** de sus entidades. Ambos deben poder explicar el sistema completo en la sustentación.
@@ -168,26 +169,26 @@ public final class Vista {
 
 ### 4.6 Rutas
 
-| Ruta | Dueño | Qué hace |
-|---|---|---|
-| `GET /` | B | Inicio con el menú |
-| `GET /vehiculos` · `POST /vehiculos` | B | Registrados · Registrar vehículo |
-| `GET /estadias` | A | En el parqueadero |
-| `POST /estadias/ingreso` | A | Registrar ingreso |
-| `POST /estadias/salida` | A | Registrar salida |
-| `POST /estadias/pago` | A | Pago en caja |
+| Ruta                                      | Dueño | Qué hace                          |
+| ----------------------------------------- | ------ | ---------------------------------- |
+| `GET /`                                 | B      | Inicio con el menú                |
+| `GET /vehiculos` · `POST /vehiculos` | B      | Registrados · Registrar vehículo |
+| `GET /estadias`                         | A      | En el parqueadero                  |
+| `POST /estadias/ingreso`                | A      | Registrar ingreso                  |
+| `POST /estadias/salida`                 | A      | Registrar salida                   |
+| `POST /estadias/pago`                   | A      | Pago en caja                       |
 
 ---
 
 ## 5. Orden de trabajo y dependencias
 
-| Momento | Integrante A | Integrante B |
-|---|---|---|
-| **Vie mañana** | Fase 0 → push | Leer el documento de diseño, ejecutar el script, crear su `db.properties` |
-| **Vie tarde** | `CobroPorHoraIniciada` + `Estadia` + `Pago` con JUnit (sin BD) | **Primero** `TarifaRepositoryJdbc` y `VehiculoRepositoryJdbc` (A los necesita el sábado), luego `TipoVehiculoRepositoryJdbc` |
-| **Sáb mañana** | `EstadiaRepositoryJdbc`, `UsuarioRepositoryJdbc`, `EstadiaService` | **Primero** la base web (A la necesita el sábado en la tarde), luego `VehiculoService` y `TipoVehiculoService` |
-| **Sáb tarde** | `EstadiaController` + vistas | `VehiculoController` + vistas; revisar el PR de A |
-| **Dom** | Juntos: pruebas de punta a punta (sección 7), correcciones, `.zip`, portada del documento | |
+| Momento                | Integrante A                                                                                | Integrante B                                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Vie mañana**  | Fase 0 → push                                                                              | Leer el documento de diseño, ejecutar el script, crear su`db.properties`                                                               |
+| **Vie tarde**    | `CobroPorHoraIniciada` + `Estadia` + `Pago` con JUnit (sin BD)                        | **Primero** `TarifaRepositoryJdbc` y `VehiculoRepositoryJdbc` (A los necesita el sábado), luego `TipoVehiculoRepositoryJdbc` |
+| **Sáb mañana** | `EstadiaRepositoryJdbc`, `UsuarioRepositoryJdbc`, `EstadiaService`                    | **Primero** la base web (A la necesita el sábado en la tarde), luego `VehiculoService` y `TipoVehiculoService`                 |
+| **Sáb tarde**   | `EstadiaController` + vistas                                                              | `VehiculoController` + vistas; revisar el PR de A                                                                                       |
+| **Dom**          | Juntos: pruebas de punta a punta (sección 7), correcciones,`.zip`, portada del documento |                                                                                                                                           |
 
 Mientras un repositorio de la otra persona no esté listo, se puede avanzar con **pruebas unitarias con Mockito** sobre la interfaz, que ya existe desde la Fase 0.
 
