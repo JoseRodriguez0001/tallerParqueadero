@@ -1,5 +1,6 @@
 package com.parqueadero.dominio.modelo;
 
+import com.parqueadero.comun.NegocioException;
 import com.parqueadero.dominio.cobro.PoliticaCobro;
 
 import java.math.BigDecimal;
@@ -30,7 +31,21 @@ public class Estadia {
     }
 
     public static Estadia iniciar(Vehiculo vehiculo, Tarifa tarifa, LocalDateTime fechaIngreso) {
-        throw new UnsupportedOperationException("Pendiente (A): RN-01, RN-16");
+
+        TipoVehiculo tipo = vehiculo.getTipoVehiculo();
+
+        if (!tipo.estaActivo()) {
+            throw new NegocioException(
+                    "El tipo de vehículo " + tipo.getNombre() + " está inactivo y no admite ingresos.");
+        }
+        if (!tarifa.getTipoVehiculo().getId().equals(tipo.getId())) {
+            throw new NegocioException("La tarifa no corresponde al tipo de vehículo " + tipo.getNombre() + ".");
+        }
+        if (!tarifa.estaVigenteEn(fechaIngreso)) {
+            throw new NegocioException("La tarifa no está vigente en la fecha de ingreso.");
+        }
+
+        return new Estadia(null, vehiculo, tarifa, fechaIngreso, null, null, EstadoEstadia.DENTRO, null);
     }
 
     public static Estadia reconstruir(Integer id, Vehiculo vehiculo, Tarifa tarifa,
@@ -40,23 +55,58 @@ public class Estadia {
     }
 
     public BigDecimal calcularValor(LocalDateTime ahora, PoliticaCobro politica) {
-        throw new UnsupportedOperationException("Pendiente ");
+        if (estado == EstadoEstadia.DENTRO) {
+            return politica.calcular(tarifa, fechaIngreso, ahora);
+        }
+
+        return valorTotal;
     }
 
     public void registrarSalida(LocalDateTime fecha, PoliticaCobro politica) {
-        throw new UnsupportedOperationException("Pendiente ");
+
+        if (estado != EstadoEstadia.DENTRO) {
+            throw new NegocioException("La estadía no está dentro del parqueadero: su salida ya fue registrada.");
+        }
+
+        BigDecimal valor = politica.calcular(tarifa, fechaIngreso, fecha);
+
+        fechaSalida = fecha;
+        valorTotal = valor;
+        estado = EstadoEstadia.PENDIENTE_PAGO;
     }
 
     public void pagarEnCaja(LocalDateTime fecha, Usuario empleado) {
-        throw new UnsupportedOperationException("Pendiente ");
+        validarPendienteDePago();
+        if (empleado != null && !empleado.estaActivo()) {
+            throw new NegocioException(
+                    "El usuario " + empleado.getNombreUsuario() + " está inactivo y no puede registrar pagos.");
+        }
+
+        cerrarCon(Pago.enCaja(valorTotal, fecha, empleado));
     }
 
     public void pagarEnLinea(LocalDateTime fecha, String referencia) {
-        throw new UnsupportedOperationException("Pendiente ");
+        validarPendienteDePago();
+
+        cerrarCon(Pago.enLinea(valorTotal, fecha, referencia));
+    }
+
+    private void validarPendienteDePago() {
+        if (estado != EstadoEstadia.PENDIENTE_PAGO) {
+            String motivo = estado == EstadoEstadia.DENTRO
+                    ? "primero se debe registrar la salida"
+                    : "la estadía ya fue pagada";
+            throw new NegocioException("No se puede registrar el pago: " + motivo + ".");
+        }
+    }
+
+    private void cerrarCon(Pago nuevoPago) {
+        pago = nuevoPago;
+        estado = EstadoEstadia.CERRADA;
     }
 
     public boolean estaActiva() {
-        throw new UnsupportedOperationException("Pendiente");
+        return estado != EstadoEstadia.CERRADA;
     }
 
     // ── Getters ────────────────────────────────────────────────────────────────
