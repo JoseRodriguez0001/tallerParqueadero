@@ -2,3 +2,6 @@ target/
 .idea/
 .vscode/
 *.class
+
+# Configuración local con contraseña (usar db.properties.example como plantilla)
+src/main/resources/db.properties

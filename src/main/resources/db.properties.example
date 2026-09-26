@@ -1,0 +1,4 @@
+# Configuración de la base de datos.
+db.url=jdbc:postgresql://localhost:5432/parqueadero
+db.usuario=postgres
+db.contrasena=CAMBIAR
