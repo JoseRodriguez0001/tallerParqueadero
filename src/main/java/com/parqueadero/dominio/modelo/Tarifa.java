@@ -30,8 +30,11 @@ public class Tarifa {
         return new Tarifa(id, tipoVehiculo, valorHora, vigenteDesde, vigenteHasta);
     }
 
+    // Intervalo semiabierto [vigenteDesde, vigenteHasta): sin vigenteHasta sigue vigente
     public boolean estaVigenteEn(LocalDateTime fecha) {
-        throw new UnsupportedOperationException("Pendiente ");
+        boolean yaInicio = !fecha.isBefore(vigenteDesde);
+        boolean noHaTerminado = vigenteHasta == null || fecha.isBefore(vigenteHasta);
+        return yaInicio && noHaTerminado;
     }
 
     public void cerrar(LocalDateTime fecha) {
