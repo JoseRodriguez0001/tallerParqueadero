@@ -6,20 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.function.Supplier;
 
-/**
- * Implementación JDBC de {@link GestorTransacciones}.
- *
- * Abre una conexión por transacción y la guarda en un {@link ThreadLocal} para que
- * todos los repositorios que participan usen la misma conexión sin recibirla como
- * parámetro. Así la capa de negocio nunca ve una {@link Connection}.
- *
- * Reglas para los repositorios JDBC:
- * <ul>
- *   <li>Obtienen la conexión con {@link #conexionActual()}.</li>
- *   <li>Nunca la cierran ni llaman a commit o rollback: eso lo hace este gestor.</li>
- *   <li>Sí cierran sus propios PreparedStatement y ResultSet (try-with-resources).</li>
- * </ul>
- */
 public class GestorTransaccionesJdbc implements GestorTransacciones {
 
     private final ConexionBD conexionBD;
@@ -55,11 +41,6 @@ public class GestorTransaccionesJdbc implements GestorTransacciones {
         }
     }
 
-    /**
-     * Conexión de la transacción en curso.
-     *
-     * @throws IllegalStateException si se llama fuera de {@link #ejecutar(Supplier)}
-     */
     public Connection conexionActual() {
         Connection conexion = conexionEnCurso.get();
         if (conexion == null) {
@@ -69,13 +50,11 @@ public class GestorTransaccionesJdbc implements GestorTransacciones {
         return conexion;
     }
 
-    // ── Helpers privados ───────────────────────────────────────────────────────
-
     private static void deshacer(Connection conexion, Throwable causa) {
         try {
             conexion.rollback();
         } catch (SQLException e) {
-            causa.addSuppressed(e);   // no ocultar el error original
+            causa.addSuppressed(e); // no ocultar el error original
         }
     }
 }

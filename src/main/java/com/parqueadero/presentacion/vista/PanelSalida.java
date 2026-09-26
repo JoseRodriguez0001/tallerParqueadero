@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import com.parqueadero.negocio.dto.EstadiaDTO;
 import com.parqueadero.presentacion.componentes.Formatos;
 
-// CU-05 Registrar salida: liquida la estadía y muestra el valor a pagar
 public class PanelSalida extends PanelBase {
 
     private final JTextField campoPlaca = new JTextField(12);

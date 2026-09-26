@@ -85,12 +85,6 @@ public class Estadia {
         cerrarCon(Pago.enCaja(valorTotal, fecha, empleado));
     }
 
-    public void pagarEnLinea(LocalDateTime fecha, String referencia) {
-        validarPendienteDePago();
-
-        cerrarCon(Pago.enLinea(valorTotal, fecha, referencia));
-    }
-
     private void validarPendienteDePago() {
         if (estado != EstadoEstadia.PENDIENTE_PAGO) {
             String motivo = estado == EstadoEstadia.DENTRO
@@ -105,11 +99,6 @@ public class Estadia {
         estado = EstadoEstadia.CERRADA;
     }
 
-    public boolean estaActiva() {
-        return estado != EstadoEstadia.CERRADA;
-    }
-
-    // ── Getters ────────────────────────────────────────────────────────────────
     public Integer getId() {
         return id;
     }

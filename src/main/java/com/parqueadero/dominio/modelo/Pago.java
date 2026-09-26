@@ -29,17 +29,10 @@ public class Pago {
         return new Pago(null, valor, fechaPago, CanalPago.CAJA, null, empleado);
     }
 
-    static Pago enLinea(BigDecimal valor, LocalDateTime fechaPago, String referencia) {
-        Objects.requireNonNull(referencia, "El pago en línea requiere la referencia de la pasarela ");
-        return new Pago(null, valor, fechaPago, CanalPago.EN_LINEA, referencia, null);
-    }
-
     public static Pago reconstruir(Integer id, BigDecimal valor, LocalDateTime fechaPago,
             CanalPago canal, String referencia, Usuario empleado) {
         return new Pago(id, valor, fechaPago, canal, referencia, empleado);
     }
-
-    // ── Getters ────────────────────────────────────────────────────────────────
 
     public Integer getId() {
         return id;

@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 
 import com.parqueadero.negocio.dto.EstadiaDTO;
 
-// Tabla de estadías (CU-07, vista "En el parqueadero")
 public class EstadiaTableModel extends AbstractTableModel {
 
     private static final String[] COLUMNAS = { "Placa", "Tipo", "Ingreso", "Salida", "Valor", "Estado" };
@@ -17,10 +16,6 @@ public class EstadiaTableModel extends AbstractTableModel {
     public void setEstadias(List<EstadiaDTO> estadias) {
         this.estadias = new ArrayList<>(estadias);
         fireTableDataChanged();
-    }
-
-    public EstadiaDTO getEstadia(int fila) {
-        return estadias.get(fila);
     }
 
     @Override

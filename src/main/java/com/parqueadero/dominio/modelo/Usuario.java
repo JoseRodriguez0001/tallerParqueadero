@@ -7,7 +7,7 @@ public class Usuario {
     private final String nombre;
     private final String contrasenaHash;
     private final Rol rol;
-    private boolean activo;
+    private final boolean activo;
 
     private Usuario(Integer id, String nombreUsuario, String nombre,
             String contrasenaHash, Rol rol, boolean activo) {
@@ -27,12 +27,6 @@ public class Usuario {
     public boolean estaActivo() {
         return activo;
     }
-
-    public void desactivar() {
-        throw new UnsupportedOperationException("Pendiente ");
-    }
-
-    // ── Getters ────────────────────────────────────────────────────────────────
 
     public Integer getId() {
         return id;

@@ -10,7 +10,7 @@ public class Tarifa {
     private final TipoVehiculo tipoVehiculo;
     private final BigDecimal valorHora;
     private final LocalDateTime vigenteDesde;
-    private LocalDateTime vigenteHasta;
+    private final LocalDateTime vigenteHasta;
 
     public Tarifa(TipoVehiculo tipoVehiculo, BigDecimal valorHora, LocalDateTime vigenteDesde) {
         this(null, tipoVehiculo, valorHora, vigenteDesde, null);
@@ -35,12 +35,6 @@ public class Tarifa {
         boolean noHaTerminado = vigenteHasta == null || fecha.isBefore(vigenteHasta);
         return yaInicio && noHaTerminado;
     }
-
-    public void cerrar(LocalDateTime fecha) {
-        throw new UnsupportedOperationException("Pendiente ");
-    }
-
-    // ── Getters ────────────────────────────────────────────────────────────────
 
     public Integer getId() {
         return id;

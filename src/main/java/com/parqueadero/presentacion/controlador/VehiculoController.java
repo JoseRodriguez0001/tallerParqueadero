@@ -9,7 +9,6 @@ import com.parqueadero.negocio.servicio.VehiculoService;
 import com.parqueadero.presentacion.vista.PanelIngreso;
 import com.parqueadero.presentacion.vista.PanelVehiculos;
 
-// CU-04 Registrar vehículo, CU-07 (vista "Registrados") y los selectores de tipo de vehículo
 public class VehiculoController {
 
     private final VehiculoService vehiculoService;

@@ -13,7 +13,6 @@ import com.parqueadero.negocio.dto.TipoVehiculoDTO;
 import com.parqueadero.presentacion.componentes.Formatos;
 import com.parqueadero.presentacion.componentes.SelectorTipoVehiculo;
 
-// CU-03 Registrar ingreso: placa y, si la placa no está registrada, tipo de vehículo (CU-04 extend)
 public class PanelIngreso extends PanelBase {
 
     private final JTextField campoPlaca = new JTextField(12);
@@ -31,7 +30,7 @@ public class PanelIngreso extends PanelBase {
         add(entrada, BorderLayout.NORTH);
         add(resultado, BorderLayout.CENTER);
 
-        campoPlaca.addActionListener(evento -> botonRegistrar.doClick());   // Enter en la placa registra
+        campoPlaca.addActionListener(evento -> botonRegistrar.doClick()); // Enter en la placa registra
     }
 
     public String getPlaca() {

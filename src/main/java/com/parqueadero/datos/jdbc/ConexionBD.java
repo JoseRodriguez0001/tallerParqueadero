@@ -2,20 +2,13 @@ package com.parqueadero.datos.jdbc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * Abre conexiones a PostgreSQL con los datos de {@code db.properties}.
- *
- * El archivo se lee del classpath ({@code src/main/resources/db.properties}) y no se
- * sube al repositorio porque contiene la contraseña. La plantilla es
- * {@code db.properties.example}.
- *
- * Solo la usa {@link GestorTransaccionesJdbc}: los repositorios nunca abren conexiones.
- */
 public class ConexionBD {
 
     private static final String ARCHIVO = "db.properties";
@@ -26,24 +19,23 @@ public class ConexionBD {
 
     public ConexionBD() {
         Properties propiedades = cargarPropiedades();
-        this.url        = requerida(propiedades, "db.url");
-        this.usuario    = requerida(propiedades, "db.usuario");
+        this.url = requerida(propiedades, "db.url");
+        this.usuario = requerida(propiedades, "db.usuario");
         this.contrasena = requerida(propiedades, "db.contrasena");
     }
 
-    /** Abre una conexión nueva. Quien la abre es responsable de cerrarla. */
+    // Abre una conexión nueva. Quien la abre es responsable de cerrarla.
     public Connection abrir() throws SQLException {
         return DriverManager.getConnection(url, usuario, contrasena);
     }
 
-    // ── Helpers privados ───────────────────────────────────────────────────────
-
+    // helpers
     private static Properties cargarPropiedades() {
-        try (InputStream entrada = ConexionBD.class.getClassLoader().getResourceAsStream(ARCHIVO)) {
+        try (InputStream entrada = abrirArchivo()) {
             if (entrada == null) {
                 throw new IllegalStateException(
-                        "No se encontró " + ARCHIVO + " en src/main/resources. "
-                        + "Cópialo desde db.properties.example y completa tus datos.");
+                        "No se encontró " + ARCHIVO + " ni junto a la aplicación ni en src/main/resources. "
+                                + "Cópialo desde db.properties.example y completa tus datos.");
             }
             Properties propiedades = new Properties();
             propiedades.load(entrada);
@@ -51,6 +43,16 @@ public class ConexionBD {
         } catch (IOException e) {
             throw new IllegalStateException("No se pudo leer " + ARCHIVO + ".", e);
         }
+    }
+
+    // El archivo externo tiene prioridad sobre el empaquetado; null si no hay
+    // ninguno
+    private static InputStream abrirArchivo() throws IOException {
+        Path externo = Path.of(ARCHIVO);
+        if (Files.isRegularFile(externo)) {
+            return Files.newInputStream(externo);
+        }
+        return ConexionBD.class.getClassLoader().getResourceAsStream(ARCHIVO);
     }
 
     private static String requerida(Properties propiedades, String clave) {

@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 
 import com.parqueadero.negocio.dto.VehiculoDTO;
 
-// Tabla de vehículos registrados (CU-07, vista "Registrados")
 public class VehiculoTableModel extends AbstractTableModel {
 
     private static final String[] COLUMNAS = { "Placa", "Tipo", "En el parqueadero" };
