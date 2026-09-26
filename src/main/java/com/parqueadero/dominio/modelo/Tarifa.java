@@ -30,7 +30,6 @@ public class Tarifa {
         return new Tarifa(id, tipoVehiculo, valorHora, vigenteDesde, vigenteHasta);
     }
 
-    // Intervalo semiabierto [vigenteDesde, vigenteHasta): sin vigenteHasta sigue vigente
     public boolean estaVigenteEn(LocalDateTime fecha) {
         boolean yaInicio = !fecha.isBefore(vigenteDesde);
         boolean noHaTerminado = vigenteHasta == null || fecha.isBefore(vigenteHasta);
