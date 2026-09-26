@@ -61,7 +61,7 @@ public class PanelPagoCaja extends PanelBase {
         botonPagar.addActionListener(evento -> accion.run());
     }
 
-    // RN-13: si la estadía sigue dentro, el valor es un estimado y todavía no se puede pagar
+    // Si la estadía sigue dentro, el valor es un estimado y todavía no se puede pagar
     public void mostrarValor(EstadiaDTO estadia) {
         boolean liquidada = "PENDIENTE_PAGO".equals(estadia.estado());
 

@@ -127,7 +127,7 @@ public class EstadiaRepositoryJdbc implements EstadiaRepository {
             throw new IllegalStateException("Error al actualizar la estadía " + estadia.getId() + ".", e);
         }
 
-        // Un pago sin id todavía no existe en la base de datos (RN-11: como máximo uno por estadía)
+        // Un pago sin id todavía no existe en la base de datos (como máximo uno por estadía)
         Optional<Pago> pagoNuevo = estadia.getPago().filter(pago -> pago.getId() == null);
         pagoNuevo.ifPresent(pago -> guardarPago(estadia.getId(), pago));
     }

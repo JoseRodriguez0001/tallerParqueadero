@@ -75,7 +75,7 @@ public class EstadiaServiceImpl implements EstadiaService {
     }
 
     // El vehículo registrado o, si la placa es nueva, uno registrado en este
-    // momento (CU-04 extend, RN-06)
+    // momento (CU-04 extend)
     private Vehiculo vehiculoParaIngreso(String placa, String codigoTipo) {
 
         Optional<Vehiculo> existente = vehiculos.buscarPorPlaca(placa);

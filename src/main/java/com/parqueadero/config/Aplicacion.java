@@ -13,7 +13,7 @@ import com.parqueadero.datos.jdbc.GestorTransaccionesJdbc;
  */
 public class Aplicacion {
 
-    // Sin inicio de sesión en el prototipo, el pago en caja se registra a nombre de este usuario (RN-18)
+    // Sin inicio de sesión en el prototipo, el pago en caja se registra a nombre de este usuario
     public static final String USUARIO_CAJA = "personal";
 
     public static void main(String[] args) {

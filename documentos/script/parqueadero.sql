@@ -19,8 +19,8 @@ CREATE TABLE tipo_vehiculo (
     nombre  VARCHAR(50)  NOT NULL,
     activo  BOOLEAN      NOT NULL DEFAULT TRUE,
 
-    CONSTRAINT uq_tipo_vehiculo_nombre UNIQUE (nombre)
     CONSTRAINT uq_tipo_vehiculo_codigo UNIQUE (codigo),
+    CONSTRAINT uq_tipo_vehiculo_nombre UNIQUE (nombre),
     CONSTRAINT ck_tipo_vehiculo_codigo_mayus CHECK (codigo = UPPER(codigo))
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE tarifa (
     CONSTRAINT ck_tarifa_vigencia CHECK (vigente_hasta IS NULL OR vigente_hasta > vigente_desde)
 );
 
--- -- RF-16 / RNF-03: una sola tarifa vigente por tipo
+-- Una sola tarifa vigente por tipo
 CREATE UNIQUE INDEX ux_tarifa_vigente_por_tipo
     ON tarifa (tipo_vehiculo_id)
     WHERE vigente_hasta IS NULL;
@@ -112,7 +112,7 @@ CREATE TABLE estadia (
     )
 );
 
--- RF-03 / RNF-03: una sola estadía activa por
+-- Una sola estadía activa por vehículo
 CREATE UNIQUE INDEX ux_estadia_activa_por_vehiculo
     ON estadia (vehiculo_id)
     WHERE estado <> 'CERRADA';
@@ -141,7 +141,7 @@ CREATE TABLE pago (
         FOREIGN KEY (usuario_id) REFERENCES usuario (id),
     CONSTRAINT ck_pago_valor_positivo CHECK (valor > 0),
     CONSTRAINT ck_pago_canal CHECK (canal IN ('CAJA', 'EN_LINEA')),
-    -- RF-11 / CU-06: caja con empleado; en línea con referencia
+    -- Caja con empleado; en línea con referencia
     CONSTRAINT ck_pago_datos_por_canal CHECK (
         (canal = 'CAJA'
             AND usuario_id IS NOT NULL AND referencia IS NULL)
@@ -175,4 +175,25 @@ INSERT INTO usuario (nombre_usuario, nombre, contrasena_hash, rol) VALUES
 
 
 -- ---------------------------------------------------------------------
+-- Demostración de extensibilidad (ejecutar manualmente)
+-- Tipos de vehículo y tarifas son datos: cambiarlos no requiere tocar el código.
+-- ---------------------------------------------------------------------
+/*
+-- Nuevo tipo de vehículo
+BEGIN;
+INSERT INTO tipo_vehiculo (codigo, nombre) VALUES ('CAMIONETA', 'Camioneta');
+INSERT INTO tarifa (tipo_vehiculo_id, valor_hora, vigente_desde)
+VALUES ((SELECT id FROM tipo_vehiculo WHERE codigo = 'CAMIONETA'), 2500.00, NOW());
+COMMIT;
+
+-- Cambio anual de tarifa
+BEGIN;
+UPDATE tarifa
+   SET vigente_hasta = '2027-01-01 00:00:00'
+ WHERE tipo_vehiculo_id = (SELECT id FROM tipo_vehiculo WHERE codigo = 'CARRO')
+   AND vigente_hasta IS NULL;
+INSERT INTO tarifa (tipo_vehiculo_id, valor_hora, vigente_desde)
+VALUES ((SELECT id FROM tipo_vehiculo WHERE codigo = 'CARRO'), 2000.00, '2027-01-01 00:00:00');
+COMMIT;
+*/
 
