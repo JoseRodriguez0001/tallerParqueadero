@@ -12,12 +12,9 @@ import com.parqueadero.dominio.modelo.TipoVehiculo;
 
 public class TipoVehiculoRepositoryJdbc implements TipoVehiculoRepository {
 
-    // Trae también los inactivos: decidir si se pueden usar es regla del dominio
-    private static final String BUSCAR_POR_CODIGO =
-            "SELECT id, codigo, nombre, activo FROM tipo_vehiculo WHERE codigo = ?";
+    private static final String BUSCAR_POR_CODIGO = "SELECT id, codigo, nombre, activo FROM tipo_vehiculo WHERE codigo = ?";
 
-    private static final String LISTAR_ACTIVOS =
-            "SELECT id, codigo, nombre, activo FROM tipo_vehiculo WHERE activo ORDER BY nombre";
+    private static final String LISTAR_ACTIVOS = "SELECT id, codigo, nombre, activo FROM tipo_vehiculo WHERE activo ORDER BY nombre";
 
     private final GestorTransaccionesJdbc gestor;
 
@@ -44,7 +41,7 @@ public class TipoVehiculoRepositoryJdbc implements TipoVehiculoRepository {
     @Override
     public List<TipoVehiculo> listarActivos() {
         try (PreparedStatement ps = gestor.conexionActual().prepareStatement(LISTAR_ACTIVOS);
-             ResultSet rs = ps.executeQuery()) {
+                ResultSet rs = ps.executeQuery()) {
 
             List<TipoVehiculo> tipos = new ArrayList<>();
             while (rs.next()) {

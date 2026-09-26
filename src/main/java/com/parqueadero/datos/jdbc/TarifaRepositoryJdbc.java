@@ -13,9 +13,9 @@ import com.parqueadero.dominio.modelo.TipoVehiculo;
 
 public class TarifaRepositoryJdbc implements TarifaRepository {
 
-    // Misma regla que Tarifa.estaVigenteEn: intervalo semiabierto [vigente_desde, vigente_hasta)
-    private static final String BUSCAR_VIGENTE =
-            "SELECT t.id, t.valor_hora, t.vigente_desde, t.vigente_hasta, "
+    // Misma regla que Tarifa.estaVigenteEn: intervalo semiabierto [vigente_desde,
+    // vigente_hasta)
+    private static final String BUSCAR_VIGENTE = "SELECT t.id, t.valor_hora, t.vigente_desde, t.vigente_hasta, "
             + "       tv.id AS tipo_id, tv.codigo AS tipo_codigo, tv.nombre AS tipo_nombre, tv.activo AS tipo_activo "
             + "FROM tarifa t "
             + "JOIN tipo_vehiculo tv ON tv.id = t.tipo_vehiculo_id "
@@ -58,7 +58,6 @@ public class TarifaRepositoryJdbc implements TarifaRepository {
                 rs.getString("tipo_nombre"),
                 rs.getBoolean("tipo_activo"));
 
-        // NULL en vigente_hasta significa que la tarifa sigue abierta
         Timestamp hasta = rs.getTimestamp("vigente_hasta");
 
         return Tarifa.reconstruir(

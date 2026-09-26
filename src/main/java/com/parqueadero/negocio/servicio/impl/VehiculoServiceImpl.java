@@ -43,10 +43,8 @@ public class VehiculoServiceImpl implements VehiculoService {
             TipoVehiculo tipo = tipos.buscarPorCodigo(codigoTipo)
                     .orElseThrow(() -> new NegocioException("El tipo de vehículo " + codigoTipo + " no existe."));
 
-            // El constructor valida la placa y que el tipo esté activo
             Vehiculo guardado = vehiculos.guardar(new Vehiculo(placaNormalizada, tipo));
 
-            // Recién registrado: todavía no tiene estadía
             return VehiculoMapper.aDTO(guardado, false);
         });
     }
@@ -55,7 +53,6 @@ public class VehiculoServiceImpl implements VehiculoService {
     public List<VehiculoDTO> listarRegistrados() {
 
         return gestor.ejecutar(() -> {
-            // Activa = distinta de CERRADA, incluye PENDIENTE_PAGO (mismo criterio que "En el parqueadero")
             Set<String> dentro = estadias.listarActivas().stream()
                     .map(estadia -> estadia.getVehiculo().getPlaca())
                     .collect(Collectors.toSet());

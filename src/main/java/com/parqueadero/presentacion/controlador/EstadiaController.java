@@ -7,7 +7,6 @@ import com.parqueadero.presentacion.vista.PanelPagoCaja;
 import com.parqueadero.presentacion.vista.PanelSalida;
 import com.parqueadero.presentacion.vista.PanelVehiculos;
 
-// CU-03, CU-05, CU-06 (con CU-01) y CU-07 (vista "En el parqueadero")
 public class EstadiaController {
 
     private static final String FALTA_PLACA = "Ingrese la placa del vehículo.";

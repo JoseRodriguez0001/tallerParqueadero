@@ -17,8 +17,6 @@ import com.parqueadero.presentacion.componentes.EstadiaTableModel;
 import com.parqueadero.presentacion.componentes.SelectorTipoVehiculo;
 import com.parqueadero.presentacion.componentes.VehiculoTableModel;
 
-// CU-04 Registrar vehículo y CU-07 Consultar vehículos ("En el parqueadero" y "Registrados").
-// Lo comparten dos controladores: EstadiaController llena "En el parqueadero" y VehiculoController el resto.
 public class PanelVehiculos extends PanelBase {
 
     private final JTextField campoPlaca = new JTextField(12);
@@ -47,7 +45,7 @@ public class PanelVehiculos extends PanelBase {
         campoPlaca.addActionListener(evento -> botonRegistrar.doClick());
     }
 
-    // ── Registro (CU-04) ───────────────────────────────────────────────────────
+    // Registro
 
     public String getPlaca() {
         return campoPlaca.getText();
@@ -71,7 +69,7 @@ public class PanelVehiculos extends PanelBase {
         campoPlaca.requestFocusInWindow();
     }
 
-    // ── Listas (CU-07) ─────────────────────────────────────────────────────────
+    // Listas
 
     // Varios controladores pueden registrarse: cada uno actualiza su lista
     public void alActualizar(Runnable accion) {

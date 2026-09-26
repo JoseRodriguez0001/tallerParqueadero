@@ -18,7 +18,6 @@ public class TipoVehiculoServiceImpl implements TipoVehiculoService {
         this.tipos = tipos;
     }
 
-    // Llena los selectores de tipo de las pantallas de registro e ingreso
     @Override
     public List<TipoVehiculoDTO> listarActivos() {
 

@@ -21,20 +21,17 @@ import com.parqueadero.dominio.modelo.Vehiculo;
 
 public class EstadiaRepositoryJdbc implements EstadiaRepository {
 
-    private static final String GUARDAR_ESTADIA =
-            "INSERT INTO estadia (vehiculo_id, tarifa_id, fecha_ingreso, fecha_salida, valor_total, estado) "
+    private static final String GUARDAR_ESTADIA = "INSERT INTO estadia (vehiculo_id, tarifa_id, fecha_ingreso, fecha_salida, valor_total, estado) "
             + "VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
 
-    private static final String ACTUALIZAR_ESTADIA =
-            "UPDATE estadia SET fecha_salida = ?, valor_total = ?, estado = ? WHERE id = ?";
+    private static final String ACTUALIZAR_ESTADIA = "UPDATE estadia SET fecha_salida = ?, valor_total = ?, estado = ? WHERE id = ?";
 
-    private static final String GUARDAR_PAGO =
-            "INSERT INTO pago (estadia_id, valor, fecha_pago, canal, referencia, usuario_id) "
+    private static final String GUARDAR_PAGO = "INSERT INTO pago (estadia_id, valor, fecha_pago, canal, referencia, usuario_id) "
             + "VALUES (?, ?, ?, ?, ?, ?)";
 
-    // Estadía con su vehículo, tipo, tarifa y, si existe, su pago y el empleado que lo recibió
-    private static final String SELECCIONAR_ESTADIAS =
-            "SELECT e.id, e.fecha_ingreso, e.fecha_salida, e.valor_total, e.estado, "
+    // Estadía con su vehículo, tipo, tarifa y, si existe, su pago y el empleado que
+    // lo recibió
+    private static final String SELECCIONAR_ESTADIAS = "SELECT e.id, e.fecha_ingreso, e.fecha_salida, e.valor_total, e.estado, "
             + "       v.id AS vehiculo_id, v.placa, "
             + "       tv.id AS tipo_id, tv.codigo AS tipo_codigo, tv.nombre AS tipo_nombre, tv.activo AS tipo_activo, "
             + "       t.id AS tarifa_id, t.valor_hora, t.vigente_desde, t.vigente_hasta, "
@@ -48,11 +45,11 @@ public class EstadiaRepositoryJdbc implements EstadiaRepository {
             + "LEFT JOIN pago p      ON p.estadia_id = e.id "
             + "LEFT JOIN usuario u   ON u.id = p.usuario_id ";
 
-    private static final String BUSCAR_ACTIVA_POR_PLACA =
-            SELECCIONAR_ESTADIAS + "WHERE v.placa = ? AND e.estado <> 'CERRADA'";
+    private static final String BUSCAR_ACTIVA_POR_PLACA = SELECCIONAR_ESTADIAS
+            + "WHERE v.placa = ? AND e.estado <> 'CERRADA'";
 
-    private static final String LISTAR_ACTIVAS =
-            SELECCIONAR_ESTADIAS + "WHERE e.estado <> 'CERRADA' ORDER BY e.fecha_ingreso";
+    private static final String LISTAR_ACTIVAS = SELECCIONAR_ESTADIAS
+            + "WHERE e.estado <> 'CERRADA' ORDER BY e.fecha_ingreso";
 
     private final GestorTransaccionesJdbc gestor;
 
@@ -79,7 +76,7 @@ public class EstadiaRepositoryJdbc implements EstadiaRepository {
     @Override
     public List<Estadia> listarActivas() {
         try (PreparedStatement ps = gestor.conexionActual().prepareStatement(LISTAR_ACTIVAS);
-             ResultSet rs = ps.executeQuery()) {
+                ResultSet rs = ps.executeQuery()) {
 
             List<Estadia> estadias = new ArrayList<>();
             while (rs.next()) {
@@ -127,12 +124,11 @@ public class EstadiaRepositoryJdbc implements EstadiaRepository {
             throw new IllegalStateException("Error al actualizar la estadía " + estadia.getId() + ".", e);
         }
 
-        // Un pago sin id todavía no existe en la base de datos (como máximo uno por estadía)
+        // Un pago sin id todavía no existe en la base de datos (como máximo uno por
+        // estadía)
         Optional<Pago> pagoNuevo = estadia.getPago().filter(pago -> pago.getId() == null);
         pagoNuevo.ifPresent(pago -> guardarPago(estadia.getId(), pago));
     }
-
-    // ── Helpers privados ───────────────────────────────────────────────────────
 
     private void guardarPago(int estadiaId, Pago pago) {
         try (PreparedStatement ps = gestor.conexionActual().prepareStatement(GUARDAR_PAGO)) {
@@ -176,7 +172,8 @@ public class EstadiaRepositoryJdbc implements EstadiaRepository {
                 mapearPago(rs));
     }
 
-    // Los LEFT JOIN devuelven null en las columnas del pago cuando la estadía aún no se ha pagado
+    // Los LEFT JOIN devuelven null en las columnas del pago cuando la estadía aún
+    // no se ha pagado
     private Pago mapearPago(ResultSet rs) throws SQLException {
         Integer pagoId = rs.getObject("pago_id", Integer.class);
         if (pagoId == null) {

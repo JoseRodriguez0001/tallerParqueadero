@@ -5,7 +5,7 @@ public class TipoVehiculo {
     private final Integer id;
     private final String codigo;
     private final String nombre;
-    private boolean activo;
+    private final boolean activo;
 
     public TipoVehiculo(String codigo, String nombre) {
         this(null, codigo, nombre, true);
@@ -25,12 +25,6 @@ public class TipoVehiculo {
     public boolean estaActivo() {
         return activo;
     }
-
-    public void desactivar() {
-        throw new UnsupportedOperationException("Pendiente ");
-    }
-
-    // ── Getters ────────────────────────────────────────────────────────────────
 
     public Integer getId() {
         return id;

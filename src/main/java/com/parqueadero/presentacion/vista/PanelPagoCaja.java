@@ -12,7 +12,6 @@ import javax.swing.event.DocumentListener;
 import com.parqueadero.negocio.dto.EstadiaDTO;
 import com.parqueadero.presentacion.componentes.Formatos;
 
-// CU-06 Registrar pago en caja: primero se consulta el valor (CU-01) y luego se registra el pago
 public class PanelPagoCaja extends PanelBase {
 
     private final JTextField campoPlaca = new JTextField(12);
@@ -30,7 +29,8 @@ public class PanelPagoCaja extends PanelBase {
 
         botonPagar.setEnabled(false);
         campoPlaca.addActionListener(evento -> botonConsultar.doClick());
-        // Si cambia la placa, el valor consultado ya no aplica: hay que volver a consultar antes de pagar
+        // Si cambia la placa, el valor consultado ya no aplica: hay que volver a
+        // consultar antes de pagar
         campoPlaca.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent evento) {
@@ -61,7 +61,8 @@ public class PanelPagoCaja extends PanelBase {
         botonPagar.addActionListener(evento -> accion.run());
     }
 
-    // Si la estadía sigue dentro, el valor es un estimado y todavía no se puede pagar
+    // Si la estadía sigue dentro, el valor es un estimado y todavía no se puede
+    // pagar
     public void mostrarValor(EstadiaDTO estadia) {
         boolean liquidada = "PENDIENTE_PAGO".equals(estadia.estado());
 

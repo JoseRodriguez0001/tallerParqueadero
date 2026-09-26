@@ -13,22 +13,17 @@ import com.parqueadero.dominio.modelo.Vehiculo;
 
 public class VehiculoRepositoryJdbc implements VehiculoRepository {
 
-    private static final String GUARDAR =
-            "INSERT INTO vehiculo (placa, tipo_vehiculo_id) VALUES (?, ?) RETURNING id";
+    private static final String GUARDAR = "INSERT INTO vehiculo (placa, tipo_vehiculo_id) VALUES (?, ?) RETURNING id";
 
-    // Vehículo con su tipo completo
-    private static final String SELECCIONAR_VEHICULOS =
-            "SELECT v.id, v.placa, "
+    private static final String SELECCIONAR_VEHICULOS = "SELECT v.id, v.placa, "
             + "       tv.id AS tipo_id, tv.codigo AS tipo_codigo, tv.nombre AS tipo_nombre, tv.activo AS tipo_activo "
             + "FROM vehiculo v "
             + "JOIN tipo_vehiculo tv ON tv.id = v.tipo_vehiculo_id ";
 
     // La placa llega ya normalizada desde el servicio
-    private static final String BUSCAR_POR_PLACA =
-            SELECCIONAR_VEHICULOS + "WHERE v.placa = ?";
+    private static final String BUSCAR_POR_PLACA = SELECCIONAR_VEHICULOS + "WHERE v.placa = ?";
 
-    private static final String LISTAR_TODOS =
-            SELECCIONAR_VEHICULOS + "ORDER BY v.placa";
+    private static final String LISTAR_TODOS = SELECCIONAR_VEHICULOS + "ORDER BY v.placa";
 
     private final GestorTransaccionesJdbc gestor;
 
@@ -55,7 +50,7 @@ public class VehiculoRepositoryJdbc implements VehiculoRepository {
     @Override
     public List<Vehiculo> listarTodos() {
         try (PreparedStatement ps = gestor.conexionActual().prepareStatement(LISTAR_TODOS);
-             ResultSet rs = ps.executeQuery()) {
+                ResultSet rs = ps.executeQuery()) {
 
             List<Vehiculo> vehiculos = new ArrayList<>();
             while (rs.next()) {
@@ -69,7 +64,6 @@ public class VehiculoRepositoryJdbc implements VehiculoRepository {
 
     @Override
     public Vehiculo guardar(Vehiculo vehiculo) {
-        // Solo inserta: no hay caso de uso que modifique un vehículo ya registrado
         if (vehiculo.getId() != null) {
             throw new IllegalArgumentException("El vehículo ya fue guardado.");
         }
