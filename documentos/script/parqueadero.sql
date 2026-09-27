@@ -174,26 +174,5 @@ INSERT INTO usuario (nombre_usuario, nombre, contrasena_hash, rol) VALUES
      '7b75908857ee42291be1b2dc6976c729da6995355227587c3807dde457a700ad', 'PERSONAL');
 
 
--- ---------------------------------------------------------------------
--- Demostración de extensibilidad (ejecutar manualmente)
--- Tipos de vehículo y tarifas son datos: cambiarlos no requiere tocar el código.
--- ---------------------------------------------------------------------
-/*
--- Nuevo tipo de vehículo
-BEGIN;
-INSERT INTO tipo_vehiculo (codigo, nombre) VALUES ('CAMIONETA', 'Camioneta');
-INSERT INTO tarifa (tipo_vehiculo_id, valor_hora, vigente_desde)
-VALUES ((SELECT id FROM tipo_vehiculo WHERE codigo = 'CAMIONETA'), 2500.00, NOW());
-COMMIT;
 
--- Cambio anual de tarifa
-BEGIN;
-UPDATE tarifa
-   SET vigente_hasta = '2027-01-01 00:00:00'
- WHERE tipo_vehiculo_id = (SELECT id FROM tipo_vehiculo WHERE codigo = 'CARRO')
-   AND vigente_hasta IS NULL;
-INSERT INTO tarifa (tipo_vehiculo_id, valor_hora, vigente_desde)
-VALUES ((SELECT id FROM tipo_vehiculo WHERE codigo = 'CARRO'), 2000.00, '2027-01-01 00:00:00');
-COMMIT;
-*/
 
